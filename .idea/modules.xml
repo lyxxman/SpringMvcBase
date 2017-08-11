@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/TangJiuTouTiao.iml" filepath="$PROJECT_DIR$/TangJiuTouTiao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tjtt-common/tjtt-common.iml" filepath="$PROJECT_DIR$/tjtt-common/tjtt-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tjtt-dao/tjtt-dao.iml" filepath="$PROJECT_DIR$/tjtt-dao/tjtt-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tjtt-model/tjtt-model.iml" filepath="$PROJECT_DIR$/tjtt-model/tjtt-model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tjtt-service/tjtt-service.iml" filepath="$PROJECT_DIR$/tjtt-service/tjtt-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tjtt-web/tjtt-web.iml" filepath="$PROJECT_DIR$/tjtt-web/tjtt-web.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<context:property-placeholder location="classpath:resources.properties" />
+	<!-- 开启controller注解支持 -->
+	<context:component-scan base-package="base.controller"
+		use-default-filters="false">
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	<mvc:annotation-driven />
+	<!-- 当在web.xml 中 DispatcherServlet使用 <url-pattern>/</url-pattern> 映射时，能映射静态资源 -->
+	<mvc:default-servlet-handler />
+	<!-- 静态资源映射 -->
+	<mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
+
+
+
+	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
+	<bean id="defaultViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver"
+		p:order="1">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 拦截器 -->
+<!--<mvc:interceptors>-->
+	<!--<mvc:interceptor>-->
+    	<!--<mvc:mapping path="/**"/>-->
+    	<!--<bean class="base.util.spring.EndLoginTime"/>-->
+    <!--</mvc:interceptor>-->
+
+    <!--<bean class="base.util.spring.LoginInterceptor"/>-->
+<!--</mvc:interceptors>-->
+
+<mvc:cors>
+	<mvc:mapping path="/**"
+				 allowed-origins="*"
+				 allowed-methods="GET, PUT, POST, OPTIONS"
+				 allowed-headers="Origin, X-Requested-With, Content-Type, Accept, access_token, visituserid"
+				 exposed-headers="Origin, X-Requested-With, Content-Type, Accept, access_token, visituserid" allow-credentials="false"
+				 max-age="2000" />
+
+</mvc:cors>
+	
+<!-- 控制器异常处理 -->
+<bean id="exceptionHandlerExceptionResolver"
+	class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+</bean>
+
+
+	<!--<bean id="controllerMethodInterceptor" class="base.util.spring.MessageInterceptor"/>-->
+
+	<!-- 方法拦截器（拦截Controller包中的所有被RequestMapping注解的方法） MethodInterceptor -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="controllerMethodPointcut" expression="execution(* base.controller..*(..)) and
+        	@annotation(org.springframework.web.bind.annotation.RequestMapping)"/>
+		<!--<aop:advisor advice-ref="controllerMethodInterceptor" pointcut-ref="controllerMethodPointcut" />-->
+	</aop:config>
+</beans>
